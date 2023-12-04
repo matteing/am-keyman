@@ -21,9 +21,9 @@ poetry install
 # Set up the tool
 poetry run am-keyman configure TEAM_ID_HERE KEY_ID_HERE KEY_FILE_PATH
 # Get your developer token 
-poetry run get-dev-token 
+poetry run am-keyman get-dev-token 
 # OPTIONAL: Grab a user token for yourself
-poetry run get-user-token DEV_TOKEN_HERE
+poetry run am-keyman get-user-token DEV_TOKEN_HERE
 # ... a web server will open up, follow the instructions
 # ... after completion, the token will show up in the console
 ```
