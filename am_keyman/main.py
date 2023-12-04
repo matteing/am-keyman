@@ -5,13 +5,14 @@ from jinja2 import Template
 import click, configparser, os, jwt, time, requests, webbrowser, threading
 import logging
 
-log = logging.getLogger('werkzeug')
+log = logging.getLogger("werkzeug")
 log.setLevel(logging.ERROR)
 
 console = Console()
 
 # Token expiration time must not be greater than 15777000 (6 months in seconds)
 EXP_TIME = 15777000
+
 
 def get_config():
     config_file = configparser.ConfigParser()
@@ -50,6 +51,10 @@ def validate_config():
 
 @click.group()
 def cli():
+    """
+    This utility allows the easy procurement of Apple Music API tokens.
+    Note that you need an Apple Developer subscription for all of this to work.
+    """
     pass
 
 
@@ -58,6 +63,7 @@ def cli():
 @click.argument("key_id")
 @click.argument("key_file")
 def configure(team_id, key_id, key_file):
+    """Configure the utility with your team ID, key ID, and key file."""
     new_config = configparser.ConfigParser()
     new_config["am_keyman"] = {
         "team_id": team_id,
@@ -71,6 +77,7 @@ def configure(team_id, key_id, key_file):
 
 @cli.command()
 def get_dev_token():
+    """Generate a developer token."""
     validate_config()
     config = get_config()
     secret = open(config.get("am_keyman", "key_file"), "r").read()
@@ -99,31 +106,39 @@ def get_dev_token():
 
 auth_app = Flask(__name__)
 
+
 @cli.command()
 @click.argument("dev_token")
 def get_user_token(dev_token):
+    """Generate a user token."""
     if not dev_token:
         console.print("[red]No dev token provided.[/red]")
         exit(1)
-    @auth_app.route('/', methods=['POST', 'GET'])
+
+    @auth_app.route("/", methods=["POST", "GET"])
     def index():
-        if request.method == 'POST':
+        if request.method == "POST":
             json = request.get_json()
-            if not json['token']:
-                return 'Invalid developer token', 403
+            if not json["token"]:
+                return "Invalid developer token", 403
             else:
                 console.print("[green]User token generated![/green]")
                 print(json["token"])
                 os._exit(0)
         else:
             # Get template from module path
-            with open(os.path.join(os.path.dirname(__file__), 'user_auth.html')) as file:
+            with open(
+                os.path.join(os.path.dirname(__file__), "user_auth.html")
+            ) as file:
                 template = Template(file.read())
                 return template.render(developer_token=dev_token)
+
     def open_browser():
         webbrowser.open("http://127.0.0.1:8000")
+
     threading.Timer(1, open_browser).start()
-    auth_app.run(host='127.0.0.1', port=8000)
+    auth_app.run(host="127.0.0.1", port=8000)
+
 
 if __name__ == "__main__":
     cli()

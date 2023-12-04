@@ -15,6 +15,9 @@ requests = "^2.31.0"
 cryptography = "^41.0.7"
 flask = "^3.0.0"
 
+[tool.poetry.scripts]
+am-keyman = "am_keyman.main:cli"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
