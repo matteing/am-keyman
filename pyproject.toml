@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "am-keyman"
+version = "0.1.0"
+description = ""
+authors = ["Sergio Mattei <sergiomattei@outlook.com>"]
+readme = "README.md"
+packages = [{include = "am_keyman"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+PyJWT = "^2.8.0"
+click = "^8.1.7"
+rich = "^13.7.0"
+requests = "^2.31.0"
+cryptography = "^41.0.7"
+flask = "^3.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

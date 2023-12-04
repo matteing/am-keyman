@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Apple Music Auth</title>
+    <script
+      src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"
+      data-web-components
+      async
+    ></script>
+  </head>
+  <body>
+    <h1>Apple Music Auth</h1>
+    <p>Click the button below to authorize your Apple Music account.</p>
+    <button>Authorize</button>
+    <script>
+      document.addEventListener("musickitloaded", async function () {
+        // Call configure() to configure an instance of MusicKit on the Web.
+        try {
+          await MusicKit.configure({
+            developerToken: "{{ developer_token }}",
+            app: {
+              name: "My Cool Web App",
+              build: "1978.4.1",
+            },
+          });
+        } catch (err) {
+          console.log(err);
+        }
+
+        // MusicKit instance is available
+        const music = MusicKit.getInstance();
+
+        document
+          .querySelector("button")
+          .addEventListener("click", async function () {
+            // Request authorization
+            const token = await music.authorize();
+            if (token) {
+              fetch("/", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ token: token.trim() }),
+              });
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
