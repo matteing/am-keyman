@@ -27,3 +27,10 @@ poetry run am-keyman get-user-token DEV_TOKEN_HERE
 # ... a web server will open up, follow the instructions
 # ... after completion, the token will show up in the console
 ```
+
+## Important note
+If you mean to grab a user token using the command-line utility, **do not use Firefox**. 
+
+The stricter security settings built into the browser will break the OAuth flow and it won't work. 
+
+Safari worked great for me.
