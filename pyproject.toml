@@ -12,13 +12,19 @@ dependencies = [
     "flask<4.0.0,>=3.0.0",
 ]
 name = "am-keyman"
-version = "0.1.0"
+version = "0.1.5"
 description = ""
 readme = "README.md"
 
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+am_keyman = ["*.html"]
 
 [project.scripts]
 am-keyman = "am_keyman.main:cli"

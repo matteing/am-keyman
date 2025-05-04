@@ -30,7 +30,7 @@ uvx am-keyman get-tokens
 
 ## Using Keyman (pip)
 
-The CLI utility is published on PyPA:
+The CLI utility is published on PyPI:
 
 ```bash
 pip install am-keyman

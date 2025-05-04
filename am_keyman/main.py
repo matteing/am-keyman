@@ -11,6 +11,8 @@ import requests
 import webbrowser
 import threading
 import logging
+from importlib import resources as impresources
+
 
 log = logging.getLogger("werkzeug")
 log.setLevel(logging.ERROR)
@@ -143,9 +145,8 @@ def get_user_token(dev_token):
                 os._exit(0)
         else:
             # Get template from module path
-            with open(
-                os.path.join(os.path.dirname(__file__), "user_auth.html")
-            ) as file:
+            templ = impresources.files() / "user_auth.html"
+            with open(templ) as file:
                 template = Template(file.read())
                 return template.render(developer_token=dev_token)
 

@@ -3,7 +3,7 @@ requires-python = ">=3.9, <4.0"
 
 [[package]]
 name = "am-keyman"
-version = "0.1.0"
+version = "0.1.4"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
