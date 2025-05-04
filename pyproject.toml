@@ -1,23 +1,24 @@
-[tool.poetry]
+[project]
+authors = [
+    {name = "Sergio Mattei", email = "sergiomattei@outlook.com"},
+]
+requires-python = "<4.0,>=3.9"
+dependencies = [
+    "PyJWT<3.0.0,>=2.8.0",
+    "click<9.0.0,>=8.1.7",
+    "rich<14.0.0,>=13.7.0",
+    "requests<3.0.0,>=2.31.0",
+    "cryptography<42.0.0,>=41.0.7",
+    "flask<4.0.0,>=3.0.0",
+]
 name = "am-keyman"
 version = "0.1.0"
 description = ""
-authors = ["Sergio Mattei <sergiomattei@outlook.com>"]
 readme = "README.md"
-packages = [{include = "am_keyman"}]
-
-[tool.poetry.dependencies]
-python = "^3.9"
-PyJWT = "^2.8.0"
-click = "^8.1.7"
-rich = "^13.7.0"
-requests = "^2.31.0"
-cryptography = "^41.0.7"
-flask = "^3.0.0"
-
-[tool.poetry.scripts]
-am-keyman = "am_keyman.main:cli"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+am-keyman = "am_keyman.main:cli"

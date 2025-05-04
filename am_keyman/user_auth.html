@@ -13,6 +13,7 @@
     <h1>Apple Music Auth</h1>
     <p>Click the button below to authorize your Apple Music account.</p>
     <button>Authorize</button>
+    <div id="err" style="background: lightcoral; display: none"></div>
     <script>
       document.addEventListener("musickitloaded", async function () {
         // Call configure() to configure an instance of MusicKit on the Web.
@@ -25,6 +26,10 @@
             },
           });
         } catch (err) {
+          // Handle error
+          document.getElementById("err").style.display = "block";
+          document.getElementById("err").innerHTML = "Error: " + err.message;
+          document.querySelector("button").style.display = "none";
           console.log(err);
         }
 

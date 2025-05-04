@@ -2,7 +2,14 @@ from rich.console import Console
 from rich.progress import Progress
 from flask import Flask, request
 from jinja2 import Template
-import click, configparser, os, jwt, time, requests, webbrowser, threading
+import click
+import configparser
+import os
+import jwt
+import time
+import requests
+import webbrowser
+import threading
 import logging
 
 log = logging.getLogger("werkzeug")
@@ -76,6 +83,14 @@ def configure(team_id, key_id, key_file):
 
 
 @cli.command()
+@click.pass_context
+def get_tokens(ctx):
+    """Runs all the authentication steps and returns the tokens."""
+    dev_token = ctx.invoke(get_dev_token)
+    ctx.invoke(get_user_token, dev_token=dev_token)
+
+
+@cli.command()
 def get_dev_token():
     """Generate a developer token."""
     validate_config()
@@ -102,6 +117,7 @@ def get_dev_token():
         console.print("[red]Key is invalid![/red]")
     console.print("[green]Generated token:[/green]")
     print(token)
+    return token
 
 
 auth_app = Flask(__name__)
