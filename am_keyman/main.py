@@ -145,7 +145,7 @@ def get_user_token(dev_token):
                 os._exit(0)
         else:
             # Get template from module path
-            templ = impresources.files() / "user_auth.html"
+            templ = impresources.files(__package__) / "user_auth.html"
             with open(templ) as file:
                 template = Template(file.read())
                 return template.render(developer_token=dev_token)

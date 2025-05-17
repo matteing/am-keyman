@@ -12,7 +12,7 @@ dependencies = [
     "flask<4.0.0,>=3.0.0",
 ]
 name = "am-keyman"
-version = "0.1.5"
+version = "0.1.6"
 description = ""
 readme = "README.md"
 
