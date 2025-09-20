@@ -85,6 +85,38 @@ def configure(team_id, key_id, key_file):
 
 
 @cli.command()
+def show_config():
+    """Show the current configuration details."""
+    config = get_config()
+    
+    if "am_keyman" not in config:
+        console.print("[red]No config found. Please run `am_keyman configure`[/red]")
+        return
+    
+    console.print("\n[bold cyan]Current Configuration:[/bold cyan]")
+    console.print("━━━━━━━━━━━━━━━━━━━━━━━━")
+    
+    team_id = config.get("am_keyman", "team_id", fallback="[red]Not configured[/red]")
+    key_id = config.get("am_keyman", "key_id", fallback="[red]Not configured[/red]")
+    key_file = config.get("am_keyman", "key_file", fallback="[red]Not configured[/red]")
+    
+    console.print(f"[bold]Team ID:[/bold] {team_id}")
+    console.print(f"[bold]Key ID:[/bold] {key_id}")
+    console.print(f"[bold]Key File:[/bold] {key_file}")
+    
+    # Check if key file exists
+    if key_file != "[red]Not configured[/red]":
+        if os.path.exists(key_file):
+            console.print("[bold]Key File Status:[/bold] [green]✓ Found[/green]")
+        else:
+            console.print("[bold]Key File Status:[/bold] [red]✗ Not found[/red]")
+    else:
+        console.print("[bold]Key File Status:[/bold] [red]✗ Not configured[/red]")
+    
+    console.print()
+
+
+@cli.command()
 @click.pass_context
 def get_tokens(ctx):
     """Runs all the authentication steps and returns the tokens."""
